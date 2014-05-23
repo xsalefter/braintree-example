@@ -1,0 +1,36 @@
+# Eclipse
+.settings
+.metadata
+.project
+.classpath
+Servers
+bin
+target
+libraries
+
+# SpringSource Tool Suite
+.springBeans
+
+# Gradle
+.gradle
+
+# Netbeans
+build
+dist
+private
+nbactions.xml
+
+# Jasper Report
+*.bak
+
+# Python compiled
+*.pyc
+
+# KomodoEdit
+*.komodoproject
+
+# dbtools
+dbtools/*.sql
+
+# misc
+catalina.base_IS_UNDEFINED
