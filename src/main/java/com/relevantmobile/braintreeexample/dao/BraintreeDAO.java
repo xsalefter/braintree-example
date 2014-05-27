@@ -8,6 +8,8 @@ import com.braintreegateway.Transaction;
 import com.braintreegateway.TransactionGateway;
 import com.braintreegateway.TransactionRequest;
 import java.math.BigDecimal;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author xsalefter
@@ -21,7 +23,11 @@ public class BraintreeDAO {
     private final BraintreeGateway gateway;
 
     public BraintreeDAO() {
-        this.gateway = new BraintreeGateway(Environment.DEVELOPMENT, MERCHANT_ID, PUBLIC_KEY, PRIVATE_KEY);
+        this.gateway = new BraintreeGateway(Environment.SANDBOX, MERCHANT_ID, PUBLIC_KEY, PRIVATE_KEY);
+    }
+
+    public BraintreeDAO(Environment environment) {
+        this.gateway = new BraintreeGateway(environment, MERCHANT_ID, PUBLIC_KEY, PUBLIC_KEY);
     }
 
     public Result<Transaction> create(BigDecimal amount, String creditCard, String cvv, String month, String year) {
@@ -37,9 +43,13 @@ public class BraintreeDAO {
                         submitForSettlement(true).
                     done();
 
-            TransactionGateway transactionGateway = gateway.transaction();
-            Result<Transaction> result = transactionGateway.sale(transactionRequest);
+        TransactionGateway transactionGateway = gateway.transaction();
+        Result<Transaction> result = transactionGateway.sale(transactionRequest);
 
-            return result;
+        return result;
+    }
+
+    public Transaction getbyTransactionId(final String transactionId) {
+        return gateway.transaction().find(transactionId);
     }
 }

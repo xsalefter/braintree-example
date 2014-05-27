@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -55,7 +56,8 @@ public class App implements Runnable {
 
         /* Process Transaction */
         post("/transaction/create", (Request request, Response response) -> {
-            final String amount = request.queryParams("amount");
+            final String amountString = request.queryParams("amount");
+            final BigDecimal amount = new BigDecimal(amountString);
             final String creditCardNumber = request.queryParams("card-number");
             final String cvv = request.queryParams("cvv");
             final String month = request.queryParams("month");
@@ -64,8 +66,7 @@ public class App implements Runnable {
             final Object[] log = {amount, creditCardNumber, cvv, month, year};
             logger.log(Level.INFO, "AMOUNT:{0} \nCARD NUMBER:{1} \nVCC:{2} \nMONTH:{3} \nYEAR:{4}", log);
 
-            Result<Transaction> result = this.braintreeDAO.create(new BigDecimal(amount), creditCardNumber, cvv, month, year);
-            logger.log(Level.INFO, "Result is: {0}", result.isSuccess());
+            Result<Transaction> result = this.braintreeDAO.create(amount, creditCardNumber, cvv, month, year);
 
             if (result.isSuccess()) {
                 logger.log(Level.INFO, "Transaction success!");
@@ -87,10 +88,14 @@ public class App implements Runnable {
         /* Get transaction detail */
         get("/transaction/:transaction-id", (Request request, Response response) -> {
             final String transactionId = request.params("transaction-id");
+            final Transaction transaction = this.braintreeDAO.getbyTransactionId(transactionId);
             response.type("text/html");
             
             Map<String, Object> params = new HashMap<>();
             params.put("transactionId", transactionId);
+            params.put("transactionStatus", transaction.getStatus());
+            params.put("transactionDate", new SimpleDateFormat("dd-MM-yyyy").format(transaction.getCreatedAt().getTime()));
+            params.put("transactionAmount", transaction.getAmount());
             // TODO: Implements get client credit card data.
             
             return Renderer.asHTML("/transaction/detail.html", params);

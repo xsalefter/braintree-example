@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
+import org.junit.Ignore;
 
 /**
  * @author xsalefter
@@ -22,7 +23,7 @@ public class BraintreeDAOTest {
         this.braintreeDAO = new BraintreeDAO();
     }
 
-    @Test
+    @Test @Ignore
     public void createTest() {
         final Result<Transaction> result = this.braintreeDAO.create(new BigDecimal("1000"), "4111111111111111", "111", "12", "2015");
         assertThat(result, is(notNullValue()));
