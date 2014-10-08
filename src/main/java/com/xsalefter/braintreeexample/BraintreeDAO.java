@@ -1,15 +1,14 @@
 
-package com.relevantmobile.braintreeexample.dao;
+package com.xsalefter.braintreeexample;
 
 import com.braintreegateway.BraintreeGateway;
 import com.braintreegateway.Environment;
+import com.braintreegateway.MerchantAccount;
 import com.braintreegateway.Result;
 import com.braintreegateway.Transaction;
 import com.braintreegateway.TransactionGateway;
 import com.braintreegateway.TransactionRequest;
 import java.math.BigDecimal;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author xsalefter
@@ -51,5 +50,9 @@ public class BraintreeDAO {
 
     public Transaction getbyTransactionId(final String transactionId) {
         return gateway.transaction().find(transactionId);
+    }
+
+    public MerchantAccount getByBraintreeMerchantId(final String btMerchantId) {
+        return this.gateway.merchantAccount().find(btMerchantId);
     }
 }

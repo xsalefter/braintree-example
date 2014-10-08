@@ -1,4 +1,4 @@
-package com.relevantmobile.braintreeexample.view;
+package com.xsalefter.braintreeexample;
 
 import java.util.Collections;
 import java.util.Map;

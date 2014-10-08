@@ -1,9 +1,8 @@
-package com.relevantmobile.braintreeexample.http;
+package com.xsalefter.braintreeexample;
 
-import com.relevantmobile.braintreeexample.dao.BraintreeDAO;
 import com.braintreegateway.Result;
 import com.braintreegateway.Transaction;
-import com.relevantmobile.braintreeexample.view.Renderer;
+import com.xsalefter.braintreeexample.Renderer;
 import freemarker.template.Configuration;
 import java.io.File;
 import java.io.IOException;
@@ -103,7 +102,7 @@ public class App implements Runnable {
     }
 
     public static void main(String... args) {
-        new App().run();
+        new Thread(new App()).start();
     }
 
     private static TemplateEngine createFreeMarkerTemplateEngine() {

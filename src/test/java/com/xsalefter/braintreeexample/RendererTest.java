@@ -1,5 +1,5 @@
 
-package com.relevantmobile.braintreeexample.view;
+package com.xsalefter.braintreeexample;
 
 import org.junit.Test;
 import static org.hamcrest.CoreMatchers.*;
